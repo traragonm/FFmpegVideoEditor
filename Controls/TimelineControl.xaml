@@ -1,0 +1,72 @@
+<UserControl x:Class="FFmpegVideoEditor.Controls.TimelineControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource TimelineTrackBrush}"
+             ClipToBounds="True">
+    <Grid>
+        <!-- Ruler (time markers) -->
+        <Canvas x:Name="canvasRuler" Height="24" VerticalAlignment="Top"
+                Background="{StaticResource SurfaceAltBrush}"/>
+
+        <!-- Track area -->
+        <Canvas x:Name="canvasTrack"
+                Margin="0,24,0,0"
+                MouseLeftButtonDown="CanvasTrack_MouseLeftButtonDown"
+                MouseMove="CanvasTrack_MouseMove"
+                MouseLeftButtonUp="CanvasTrack_MouseLeftButtonUp"
+                Cursor="Hand">
+
+            <!-- Trim region (shaded overlay) -->
+            <Rectangle x:Name="rectTrimRegion"
+                       Fill="#662A5298"
+                       Stroke="#882A5298"
+                       StrokeThickness="1"
+                       Height="999"
+                       Canvas.Top="0"/>
+
+            <!-- Trim left handle -->
+            <Rectangle x:Name="rectTrimLeft"
+                       Fill="{StaticResource AccentBrush}"
+                       Width="4" Height="999"
+                       Canvas.Top="0"
+                       Cursor="SizeWE"
+                       MouseLeftButtonDown="TrimHandle_MouseLeftButtonDown"
+                       Tag="Left"/>
+
+            <!-- Trim right handle -->
+            <Rectangle x:Name="rectTrimRight"
+                       Fill="{StaticResource AccentBrush}"
+                       Width="4" Height="999"
+                       Canvas.Top="0"
+                       Cursor="SizeWE"
+                       MouseLeftButtonDown="TrimHandle_MouseLeftButtonDown"
+                       Tag="Right"/>
+
+            <!-- Playhead -->
+            <Canvas x:Name="canvasPlayhead" Canvas.Top="0">
+                <Polygon x:Name="playheadHead"
+                         Fill="{StaticResource PlayheadBrush}"
+                         Points="0,0 12,0 6,10"/>
+                <Line x:Name="playheadLine"
+                      X1="6" Y1="10" X2="6" Y2="999"
+                      Stroke="{StaticResource PlayheadBrush}"
+                      StrokeThickness="2"/>
+            </Canvas>
+        </Canvas>
+
+        <!-- Video clip bar (inside track) -->
+        <Canvas x:Name="canvasClip" Margin="0,24,0,0" IsHitTestVisible="False">
+            <Rectangle x:Name="rectClip"
+                       Fill="{StaticResource TimelineClipBrush}"
+                       Height="36"
+                       Canvas.Top="20"
+                       RadiusX="4" RadiusY="4"
+                       Opacity="0.85"/>
+            <TextBlock x:Name="lblClipName"
+                       FontSize="11" Foreground="White"
+                       Canvas.Top="32"
+                       Canvas.Left="8"
+                       IsHitTestVisible="False"/>
+        </Canvas>
+    </Grid>
+</UserControl>
